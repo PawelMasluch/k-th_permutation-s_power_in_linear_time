@@ -19,7 +19,7 @@ LL k; // exponent (9*10^18 >= k >= 0)
 int t[MAX_N]; // permutation (for user, of {1..n} set; for calculations, of {0..n-1} set)
 
 
-int * numbers_of_cycles(int *t, int n){
+int * IDs_of_cycles(int *t, int n){
 	int *res = new int [n];
 	
 	
@@ -138,7 +138,7 @@ int * k_th_permutation_power(int *t, int n, LL k){
 	
 	
 	
-	int * numbersOfCycles = numbers_of_cycles(t, n);
+	int * IDsOfCycles = IDs_of_cycles(t, n);
 	/*
 	std::cout << "\nNumbers of cycles:\n";
 	REP(i,0,n-1){
@@ -174,13 +174,13 @@ int * k_th_permutation_power(int *t, int n, LL k){
 	
 	REP(i,0,n-1){
 		
-		int cycle_number = numbersOfCycles[i];
+		int cycle_number = IDsOfCycles[i];
 		int position_in_cycle = positionsInCycles[i];
 		int cycle_length = Cycles[ cycle_number ].size();
 		int destination_position_in_cycle = (position_in_cycle + k - 1) % cycle_length;
+		int destination_index = Cycles[cycle_number][destination_position_in_cycle];
 		
-		res[   Cycles[cycle_number][destination_position_in_cycle]   ] = t[i];
-		
+		res[destination_index] = t[i];
 	}
 	
 	
@@ -189,7 +189,7 @@ int * k_th_permutation_power(int *t, int n, LL k){
 	}
 	
 	
-	delete [] numbersOfCycles;
+	delete [] IDsOfCycles;
 	delete [] positionsInCycles;
 	Cycles.clear();
 	
